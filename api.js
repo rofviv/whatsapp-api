@@ -63,8 +63,8 @@ client.initialize();
 
 // const chatRoute = require("./components/chatting");
 // const groupRoute = require("./components/group");
-// const contactRoute = require("./components/contact");
-// const otpRoute = require('./components/otp');
+const contactRoute = require("./components/contact");
+const otpRoute = require('./components/otp');
 
 const authRoute = require("./components/auth");
 const messageRoute = require('./components/message');
