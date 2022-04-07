@@ -30,6 +30,7 @@ router.get("/getqr", async (req, res) => {
 
 function sendQr(res) {
   fs.readFile("components/last.qr", (err, last_qr) => {
+    console.log("last_qr", last_qr);
     if (!err && last_qr) {
       var page = `
                     <html>
@@ -57,5 +58,27 @@ function sendQr(res) {
     }
   });
 }
+
+router.get("/clear_session", async (req, res) => {
+  try {
+    const path = require("path");
+    const { Client, LocalAuth } = require("whatsapp-web.js");
+    const folderPath = path.join(__dirname, "..", ".wwebjs_auth");
+    if (fs.existsSync(folderPath)) fs.rmSync(folderPath, { recursive: true });
+    //TODO reset
+    global.client.removeAllListeners();
+    // await global.client?.destroy()
+    global.client = new Client({
+      authStrategy: new LocalAuth(),
+      puppeteer: { headless: true, args: ['--no-sandbox'] },
+    });
+    global.authed = false;
+    client.initialize();
+    res.json({ status: 200, message: "OK" });
+  } catch (error) {
+    console.log("errror clear session", error);
+    res.status(401).json({ status: 401, message: "Error" });
+  }
+});
 
 module.exports = router;

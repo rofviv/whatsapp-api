@@ -56,7 +56,8 @@ router.post('/send/image', async (req, res) => {
         client.isRegisteredUser(`${phone}@c.us`).then((exists) => {
           if (exists) {
             var path = './temp/' + image;
-            let media = MessageMedia.fromFilePath(path);
+            //let media = MessageMedia.fromFilePath(path);
+            const media = new MessageMedia('image/png', image);
             client.sendMessage(`${phone}@c.us`, media, { caption: caption || '' }).then((response) => {
               if (response.id.fromMe) {
                 res.send({ status: 'SUCCESS', message: `MediaMessage successfully sent to ${phone}` })
