@@ -3,3 +3,5 @@ session.json
 temp
 components/last.qr
 .wwebjs_auth/
+dist/
+build/

@@ -2,10 +2,34 @@
   "name": "whatsapp-node-api",
   "version": "0.0.3",
   "description": "A NodeJS API wrapper for whatsapp-web.js",
-  "main": "api.js",
+  "main": "main.js",
   "scripts": {
     "start": "node api.js",
+    "desktop": "electron .",
+    "build-installer2": "electron-builder",
+    "build-installer": "electron-packager . --out=build",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "build": {
+    "appId": "whatsapp.api",
+    "mac": {
+      "category": "your.app.category.type"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "icon.ico",
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+    "nsis": {
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "uninstallDisplayName": "CPU Monitor",
+      "license": "license.txt",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "repository": {
     "type": "git",
@@ -38,6 +62,8 @@
     "whatsapp-web.js": "^1.16.5"
   },
   "devDependencies": {
-    "puppeteer": "^13.5.2"
+    "electron": "^18.0.3",
+    "electron-builder": "^22.14.13",
+    "electron-packager": "^15.4.0"
   }
 }
