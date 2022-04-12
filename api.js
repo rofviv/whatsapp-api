@@ -7,17 +7,14 @@ const cors = require('cors')
 const path = require('path');
 
 const config = require("./config.json");
-const { Client, LocalAuth } = require("whatsapp-web.js");
+const { generateClientWhatsapp } = require('./components/utils');
 const app = express();
+app.use(cors());
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 process.title = "whatsapp-node-api";
-global.client = new Client({
-  authStrategy: new LocalAuth(),
-  puppeteer: { headless: true, args: ['--no-sandbox'] },
-});
-
+global.client = generateClientWhatsapp();
 global.authed = false;
 
 
@@ -29,7 +26,6 @@ app.use(bodyParser.json({ limit: "50mb" }));
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 
 //socket
 io.on('connection', clientSocket => {

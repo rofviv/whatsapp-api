@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const fs = require("fs");
+const { generateClientWhatsapp } = require('./utils');
 
 router.get("/checkauth", async (req, res) => {
   client
@@ -62,16 +63,11 @@ function sendQr(res) {
 router.get("/clear_session", async (req, res) => {
   try {
     const path = require("path");
-    const { Client, LocalAuth } = require("whatsapp-web.js");
     const folderPath = path.join(__dirname, "..", ".wwebjs_auth");
     if (fs.existsSync(folderPath)) fs.rmSync(folderPath, { recursive: true });
-    //TODO reset
+    //Reset client
     global.client.removeAllListeners();
-    // await global.client?.destroy()
-    global.client = new Client({
-      authStrategy: new LocalAuth(),
-      puppeteer: { headless: true, args: ['--no-sandbox'] },
-    });
+    global.client = generateClientWhatsapp();
     global.authed = false;
     client.initialize();
     res.json({ status: 200, message: "OK" });
