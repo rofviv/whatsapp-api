@@ -9,9 +9,12 @@ const path = require('path');
 const config = require("./config.json");
 const { generateClientWhatsapp } = require('./components/utils');
 const app = express();
-app.use(cors());
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+  }
+});
 
 process.title = "whatsapp-node-api";
 global.client = generateClientWhatsapp();
@@ -20,6 +23,7 @@ global.authed = false;
 
 const port = process.env.PORT || config.port;
 
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 //Set Request Size Limit 50 MB
 app.use(bodyParser.json({ limit: "50mb" }));
