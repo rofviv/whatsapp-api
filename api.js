@@ -1,4 +1,5 @@
 const express = require("express");
+require('express-async-errors');
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const axios = require("axios");
@@ -47,24 +48,14 @@ io.on('connection', clientSocket => {
     clientSocket.emit('authenticated', false);
     process.exit();
   });
+  client.on("ready", () => {
+    console.log("Client is ready!");
+  });
+  client.on("disconnected", () => {
+    console.log("disconnected");
+  });
 });
 
-client.on("ready", () => {
-  console.log("Client is ready!");
-});
-
-client.on("message", async (msg) => {
-  if (config.webhook.enabled) {
-    if (msg.hasMedia) {
-      const attachmentData = await msg.downloadMedia();
-      msg.attachmentData = attachmentData;
-    }
-    axios.post(config.webhook.path, { msg });
-  }
-});
-client.on("disconnected", () => {
-  console.log("disconnected");
-});
 client.initialize();
 
 // const chatRoute = require("./components/chatting");
@@ -74,6 +65,7 @@ const otpRoute = require('./components/otp');
 
 const authRoute = require("./components/auth");
 const messageRoute = require('./components/message');
+const { handleError } = require("./middlewares/handle-error.middlewares");
 
 app.use(function (req, res, next) {
   console.log(req.method + " : " + req.path);
@@ -90,6 +82,9 @@ app.use('/message', messageRoute);
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
+//Manejar Error
+app.use(handleError);
 
 server.listen(port, () => {
   console.log("Server Running Live on Port : " + port);

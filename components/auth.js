@@ -62,17 +62,17 @@ function sendQr(res) {
 
 router.get("/clear_session", async (req, res) => {
   try {
+    global.client?.removeAllListeners();
     const path = require("path");
     const folderPath = path.join(__dirname, "..", ".wwebjs_auth");
     if (fs.existsSync(folderPath)) fs.rmSync(folderPath, { recursive: true });
     //Reset client
-    global.client.removeAllListeners();
     global.client = generateClientWhatsapp();
     global.authed = false;
-    client.initialize();
+    global.client.initialize();
     res.json({ status: 200, message: "OK" });
   } catch (error) {
-    console.log("errror clear session", error);
+    console.log("error clear session", error);
     res.status(401).json({ status: 401, message: "Error" });
   }
 });
