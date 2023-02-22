@@ -83,9 +83,9 @@ app.use("/contact", contactRoute);
 app.use('/otp', otpRoute);
 app.use('/message', messageRoute);
 
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// app.get('/*', function (req, res) {
+//   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// });
 
 //Manejar Error
 app.use(handleError);
