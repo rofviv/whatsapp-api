@@ -62,7 +62,7 @@ io.on('connection', clientSocket => {
 client.initialize();
 
 // const chatRoute = require("./components/chatting");
-// const groupRoute = require("./components/group");
+const groupRoute = require("./components/group");
 const contactRoute = require("./components/contact");
 const otpRoute = require('./components/otp');
 
@@ -75,7 +75,7 @@ app.use(function (req, res, next) {
   next();
 });
 // app.use("/chat", chatRoute);
-// app.use("/group", groupRoute);
+app.use("/group", groupRoute);
 app.use("/auth", authRoute);
 app.use("/contact", contactRoute);
 
