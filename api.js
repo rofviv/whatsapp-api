@@ -17,8 +17,8 @@ const io = require('socket.io')(server, {
   }
 });
 
-const folderPath = path.join(__dirname, ".wwebjs_auth");
-if (fs.existsSync(folderPath)) fs.rmSync(folderPath, { recursive: true });
+// const folderPath = path.join(__dirname, ".wwebjs_auth");
+// if (fs.existsSync(folderPath)) fs.rmSync(folderPath, { recursive: true });
 
 process.title = "whatsapp-node-api";
 global.client = generateClientWhatsapp();
@@ -36,28 +36,29 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //socket
-io.on('connection', clientSocket => {
-  console.log('cliente conectado', clientSocket.id);
-  client.removeAllListeners();
-  client.on("qr", (qr) => {
-    console.log("qr");
-    clientSocket.emit('qr', qr);
-  });
-  client.on("authenticated", () => {
-    console.log('authenticated');
-    clientSocket.emit('authenticated', true);
-  });
-  client.on("auth_failure", () => {
-    clientSocket.emit('authenticated', false);
-    process.exit();
-  });
-  client.on("ready", () => {
-    console.log("Client is ready!");
-  });
-  client.on("disconnected", () => {
-    console.log("disconnected");
-  });
+// io.on('connection', clientSocket => {
+// console.log('cliente conectado', clientSocket.id);
+// client.removeAllListeners();
+client.on("qr", (qr) => {
+  console.log("qr");
+  fs.writeFileSync("./components/last.qr", qr);
+  // clientSocket.emit('qr', qr);
 });
+client.on("authenticated", () => {
+  console.log('authenticated');
+  // clientSocket.emit('authenticated', true);
+});
+client.on("auth_failure", () => {
+  // clientSocket.emit('authenticated', false);
+  process.exit();
+});
+client.on("ready", () => {
+  console.log("Client is ready!");
+});
+client.on("disconnected", () => {
+  console.log("disconnected");
+});
+// });
 
 client.initialize();
 

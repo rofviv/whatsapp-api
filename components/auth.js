@@ -31,7 +31,7 @@ router.get("/getqr", async (req, res) => {
 
 function sendQr(res) {
   fs.readFile("components/last.qr", (err, last_qr) => {
-    console.log("last_qr", last_qr);
+    // console.log("last_qr", last_qr);
     if (!err && last_qr) {
       var page = `
                     <html>
