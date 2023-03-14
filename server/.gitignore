@@ -1,0 +1,7 @@
+node_modules
+session.json
+temp
+components/last.qr
+.wwebjs_auth/
+dist/
+build/

@@ -1,0 +1,1 @@
+export const NO_IMAGE= 'https://www.royalmayline.com/themes/royalmayline/assets/images/no-image.svg'
