@@ -14,4 +14,4 @@ EXPOSE 3000
 
 CMD ["npm", "start"]
 
-# docker run --env REACT_APP_API_URL=http://localhost:5004 -dp 5000:3000 --name client wp-client
+# docker run --env REACT_APP_API_URL=http://localhost:5004 -dp 5000:3000 --name client rofviv/client-whatsapp

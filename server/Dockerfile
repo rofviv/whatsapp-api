@@ -10,11 +10,14 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 COPY package.json .
+COPY package-lock.json .
 
 RUN npm install
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE 5004
 
 CMD ["npm", "start"]
+
+# docker run -dp 5004:5004 --name wp-server rofviv/server-whatsapp
