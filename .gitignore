@@ -5,3 +5,4 @@ components/last.qr
 .wwebjs_auth/
 dist/
 build/
+.wwebjs_cache/
