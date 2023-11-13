@@ -17,8 +17,8 @@ const io = require('socket.io')(server, {
   }
 });
 
-const folderPath = path.join(__dirname, ".wwebjs_auth");
-if (fs.existsSync(folderPath)) fs.rmSync(folderPath, { recursive: true });
+// const folderPath = path.join(__dirname, ".wwebjs_auth");
+// if (fs.existsSync(folderPath)) fs.rmSync(folderPath, { recursive: true });
 
 process.title = "whatsapp-node-api";
 global.client = generateClientWhatsapp();
